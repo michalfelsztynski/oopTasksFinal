@@ -55,11 +55,11 @@ public abstract class Car extends Device implements Soldable, Comparable<Car> {
         if (buyer.cash < price) {
             throw new Exception(TO_EXPENSIVE);
         }
-        if (isActualOwner(seller)){
+        if (isActualOwner(seller)) {
             throw new Exception(NOT_ACTUAL_OWNER);
         }
 
-        owners.add(owners.size(),buyer);
+        owners.add(owners.size(), buyer);
         buyer.removeCar(this);
         seller.setCar(this);
         buyer.cash -= price;
@@ -67,19 +67,24 @@ public abstract class Car extends Device implements Soldable, Comparable<Car> {
         System.out.println(SUCCESSFUL);
     }
 
-    private boolean isActualOwner(Human owner){
-        return owners.get(owners.size()-1)!=owner;
+    private boolean isActualOwner(Human owner) {
+        return owners.get(owners.size() - 1) != owner;
     }
 
-    private boolean isHistoricalOwner(Human owner){
+    private boolean isHistoricalOwner(Human owner) {
         return owners.contains(owner);
     }
 
-    public boolean hadTransationBefore(Human seller, Human buyer){
-        return owners.containsAll(List.of(seller,buyer));
+    public boolean hadTransationBefore(Human seller, Human buyer) {
+        int dist = owners.indexOf(seller) - owners.indexOf(buyer);
+        boolean hadTransaction = false;
+        if (dist == 1 || dist == -1) {
+            hadTransaction = true;
+        }
+        return hadTransaction;
     }
 
-    public int numberOfSales(){
+    public int numberOfSales() {
         return owners.size();
     }
 

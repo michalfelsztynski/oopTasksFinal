@@ -8,7 +8,6 @@ import pl.wsb.oop.model.common.Soldable;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.time.Instant;
 
 @Getter
 @Setter

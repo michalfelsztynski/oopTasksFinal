@@ -24,6 +24,7 @@ public class Human extends Animal {
     private static final String BY_CASH = "Bought by cash";
     private static final String ON_CREDIT = "bought on credit";
     private static final String GET_BETTER_JOB = "Get better job u cannot buy this car";
+    private static final String NO_SPACE = "no space for new car in garage";
 
     private String firstName;
     private String lastName;
@@ -114,19 +115,20 @@ public class Human extends Animal {
     }
 
     public void setCar(Car car, int index) {
-        tryToBuy(car, index);
+        payFor(car, index);
     }
 
     public void setCar(Car car) {
         if (hasAFreePlace()) {
-            tryToBuy(car, getFreeSpace());
+            payFor(car, getFreeSpace());
         }
     }
 
-    private void tryToBuy(Car car, int index) {
+    private void payFor(Car car, int index) {
         Double carV = car.getValue();
-
-        if (carV < cash) {
+        if (index <0) {
+            System.out.println(NO_SPACE);
+        } else if (carV < cash) {
             System.out.println(BY_CASH);
             this.garage[index] = car;
         } else if (salary > carV / 12) {
